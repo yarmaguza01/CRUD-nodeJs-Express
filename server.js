@@ -100,29 +100,29 @@ app.post('/addbook', (req, res) => {
 })
 
 //update book witch id
-app.put('/book',(req,res)=>{
+app.put('/book', (req, res) => {
     let id = req.body.id;
     let name = req.body.name;
     let author = req.body.author;
 
-    if(!id){
+    if (!id) {
         return res.status(400).send({
             error: true,
             message: "please add book 'id' "
-        })  
+        })
     }
-    if(!name || !author){
+    if (!name || !author) {
         return res.status(400).send({
             error: true,
             message: "please add book 'name' or 'author' that want to edit"
         })
-    } else{
-        dbCon.query("UPDATE books SET name = ?,author = ? WHERE id = ?",[name,author,id],(error, results, fields)=>{
-            if(error) throw error;
+    } else {
+        dbCon.query("UPDATE books SET name = ?,author = ? WHERE id = ?", [name, author, id], (error, results, fields) => {
+            if (error) throw error;
             let message = "";
-            if(results.changedRows === 0){
+            if (results.changedRows === 0) {
                 message = "Book not found or data are same";
-            }else{
+            } else {
                 message = "update book successfully"
             }
             return res.send({
@@ -135,20 +135,20 @@ app.put('/book',(req,res)=>{
 })
 
 //delete book by id
-app.delete('/book',(req,res)=>{
+app.delete('/book', (req, res) => {
     let id = req.body.id;
-    if(!id){
+    if (!id) {
         return res.status(400).send({
             error: true,
             message: "please add book id from delete"
         })
-    }else{
-        dbCon.query("DELETE FROM books WHERE id = ?",[id],(error, results, fields)=>{
-            if(error)throw error
+    } else {
+        dbCon.query("DELETE FROM books WHERE id = ?", [id], (error, results, fields) => {
+            if (error) throw error
             let message = "";
-            if(results.affectedRows === 0){
+            if (results.affectedRows === 0) {
                 message = "'id' Book not found";
-            }else{
+            } else {
                 message = "deleted book successfully"
             }
             return res.send({
@@ -158,5 +158,5 @@ app.delete('/book',(req,res)=>{
             })
         })
     }
-    
+
 })
